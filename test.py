@@ -6,10 +6,7 @@ matrix1 = np.array([[1, 2], [3, 4]])
 matrix2 = np.array([[5, 6], [7, 8]])
 
 # Convert NumPy arrays to lists for JSON serialization
-data = {
-    "matrix1": matrix1.tolist(),
-    "matrix2": matrix2.tolist()
-}
+data = {"matrix1": matrix1.tolist(), "matrix2": matrix2.tolist()}
 
 # Send the POST request
 url = "http://localhost:8000/matrix/multiply"
