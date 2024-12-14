@@ -1,13 +1,12 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 import numpy as np
-from typing import List
+from .schemas import MatricesInput
 
 app = FastAPI()
 
-class MatricesInput(BaseModel):
-    matrix1: List[List[float]]
-    matrix2: List[List[float]]
+@app.get("/")
+async def root():
+    return {"message": "API is running"}
 
 @app.post("/matrix/multiply")
 async def multiply_matrices(matrices: MatricesInput):
