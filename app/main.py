@@ -1,6 +1,13 @@
 from fastapi import FastAPI
 import numpy as np
-from .schemas import MatricesInput
+from pydantic import BaseModel
+from typing import List
+
+
+class MatricesInput(BaseModel):
+    matrix1: List[List[float]]
+    matrix2: List[List[float]]
+
 
 app = FastAPI()
 
