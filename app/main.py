@@ -14,7 +14,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "API is running"}
+    return {"message": "API is running test"}
 
 
 @app.post("/matrix/multiply")

@@ -1,0 +1,28 @@
+services:
+  api:
+    build: .
+    expose:
+      - 80
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"  # Changed to 8080
+    depends_on:
+      - api
+    networks:
+      - app_network
+    # Add logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+networks:
+  app_network:
+    driver: bridge
