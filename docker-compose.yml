@@ -3,6 +3,8 @@ services:
     build: .
     expose:
       - 80
+    volumes:
+      - ./app:/code/app
     networks:
       - app_network
 

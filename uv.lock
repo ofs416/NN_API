@@ -417,6 +417,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "numpy" },
+    { name = "uvicorn" },
 ]
 
 [package.dev-dependencies]
@@ -430,6 +431,7 @@ dev = [
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.6" },
     { name = "numpy", specifier = ">=2.2.0" },
+    { name = "uvicorn", specifier = ">=0.32.1" },
 ]
 
 [package.metadata.requires-dev]
