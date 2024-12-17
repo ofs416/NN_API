@@ -4,7 +4,7 @@ import requests
 # Create example matrices using NumPy
 matrix1 = np.array([[1, 2], [3, 4]])
 matrix2 = np.array([[5, 6], [7, 8]])
-expected_matrix = np.array([[19., 22.], [43., 50.]])
+expected_matrix = np.array([[19.0, 22.0], [43.0, 50.0]])
 
 
 # Convert NumPy arrays to lists for JSON serialization
