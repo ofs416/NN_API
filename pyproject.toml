@@ -11,8 +11,14 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "ipykernel>=6.29.5",
+    "ipynb>=0.5.1",
     "matplotlib>=3.10.0",
     "pandas>=2.2.3",
+    "pysmiles>=1.1.2",
     "requests>=2.32.3",
     "ruff>=0.8.3",
+    "torch-geometric>=2.6.1",
+    "torch>=2.5.1",
+    "tqdm>=4.67.1",
 ]

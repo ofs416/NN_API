@@ -14,9 +14,10 @@ __pycache__
 .dockerignore
 dockerfile
 docker-compose.yml
-nginx.conf
+
 
 *.md
 tests/
 benchmarks/
 models/molecular_solubility.ipynb
+models/curated-solubility-dataset.csv
