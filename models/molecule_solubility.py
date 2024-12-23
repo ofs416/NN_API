@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from typing import List, Optional, Tuple
 
+
 class MoleculeDataset(Dataset):
     def __init__(self, csv_file: str, smiles_col="SMILES", target_col="Solubility"):
         self.data = pd.read_csv(csv_file)
@@ -51,6 +52,7 @@ class MoleculeDataset(Dataset):
             self.targets[idx]
         ).float()
 
+
 class SolubilityPredictor(nn.Module):
     def __init__(self, input_size: int = 2048):
         super().__init__()
@@ -69,6 +71,7 @@ class SolubilityPredictor(nn.Module):
 
     def forward(self, x) -> torch.Tensor:
         return self.model(x)
+
 
 class Trainer:
     def __init__(
@@ -208,7 +211,7 @@ def main():
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
 
-        # Initialize model, criterion, optimizer
+    # Initialize model, criterion, optimizer
     model = SolubilityPredictor()
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
@@ -226,4 +229,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
