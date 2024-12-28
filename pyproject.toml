@@ -23,4 +23,5 @@ dev = [
     "tqdm>=4.67.1",
     "rdkit>=2024.3.6",
     "scikit-learn>=1.6.0",
+    "ray[default]>=2.40.0",
 ]
