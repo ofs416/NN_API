@@ -7,7 +7,7 @@ from typing import List, Union
 
 class SolubilityInference:
     def __init__(
-        self, model_path: str = "models/model_scripted.pt", device: str = None
+        self, model_path: str = "model_scripted.pt", device: str = None
     ):
         if device is None:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
