@@ -40,7 +40,6 @@ class SolubilityInference:
         morgan_gen = Chem.rdFingerprintGenerator.GetMorganGenerator(radius=2)
         return morgan_gen.GetFingerprintAsNumPy(mol)
 
-    @app.post("/")
     def predict_single(self, smiles: str):
         """Predict solubility for a single SMILES string."""
         features = self.process_smiles(smiles)
@@ -48,6 +47,22 @@ class SolubilityInference:
             features_tensor = torch.FloatTensor(features).unsqueeze(0).to(self.device)
             prediction = self.model(features_tensor).squeeze().item()
         return prediction
+
+    @ray.remote
+    def predict_single_ray(self, smiles: str):
+        """Helper for parallelizing prediction."""
+        return self.predict_single(smiles)
+
+    @app.post("/predict")
+    def predict_single_endpoint(self, smiles: str):
+        return self.predict_single(smiles)
+
+    @app.post("/predict_batch")
+    async def predict_batch(self, smiles_list: List[str]):
+        """Predict solubility for a list of SMILES strings."""
+        futures = [self.predict_single_ray.remote(smiles) for smiles in smiles_list]
+        predictions = await ray.get(futures) 
+        return predictions
 
 
 SolubilityInference_app = SolubilityInference.bind()
