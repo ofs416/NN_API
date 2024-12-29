@@ -1099,6 +1099,9 @@ source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "numpy" },
+    { name = "ray", extra = ["default"] },
+    { name = "rdkit" },
+    { name = "torch" },
 ]
 
 [package.dev-dependencies]
@@ -1108,12 +1111,10 @@ dev = [
     { name = "matplotlib" },
     { name = "pandas" },
     { name = "pysmiles" },
-    { name = "ray", extra = ["default"] },
     { name = "rdkit" },
     { name = "requests" },
     { name = "ruff" },
     { name = "scikit-learn" },
-    { name = "torch" },
     { name = "torch-geometric" },
     { name = "tqdm" },
 ]
@@ -1122,6 +1123,9 @@ dev = [
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.6" },
     { name = "numpy", specifier = ">=2.2.0" },
+    { name = "ray", extras = ["default"], specifier = ">=2.40.0" },
+    { name = "rdkit", specifier = ">=2024.3.6" },
+    { name = "torch", specifier = ">=2.5.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -1131,12 +1135,10 @@ dev = [
     { name = "matplotlib", specifier = ">=3.10.0" },
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "pysmiles", specifier = ">=1.1.2" },
-    { name = "ray", extras = ["default"], specifier = ">=2.40.0" },
     { name = "rdkit", specifier = ">=2024.3.6" },
     { name = "requests", specifier = ">=2.32.3" },
     { name = "ruff", specifier = ">=0.8.3" },
     { name = "scikit-learn", specifier = ">=1.6.0" },
-    { name = "torch", specifier = ">=2.5.1" },
     { name = "torch-geometric", specifier = ">=2.6.1" },
     { name = "tqdm", specifier = ">=4.67.1" },
 ]
