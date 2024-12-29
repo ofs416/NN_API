@@ -61,7 +61,7 @@ class SolubilityInference:
     async def predict_batch(self, smiles_list: List[str]):
         """Predict solubility for a list of SMILES strings."""
         futures = [self.predict_single_ray.remote(smiles) for smiles in smiles_list]
-        predictions = await ray.get(futures) 
+        predictions = await ray.get(futures)
         return predictions
 
 

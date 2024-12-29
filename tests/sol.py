@@ -13,6 +13,7 @@ for mol in test_molecules:
     print(f"{mol}:", response.json())
 
 
-
-response = requests.post("http://127.0.0.1:8000/predict_batch", params={"smiles_list": test_molecules})
+response = requests.post(
+    "http://127.0.0.1:8000/predict_batch", params={"smiles_list": test_molecules}
+)
 print(response.json())
