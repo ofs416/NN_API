@@ -15,7 +15,9 @@ app = FastAPI()
 @serve.deployment(num_replicas=2, ray_actor_options={"num_cpus": 0.5, "num_gpus": 0})
 @serve.ingress(app)
 class SolubilityInference:
-    def __init__(self, model_path: str = "models/model_scripted.pt", device: str = None):
+    def __init__(
+        self, model_path: str = "models/model_scripted.pt", device: str = None
+    ):
         if device is None:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         else:
@@ -49,8 +51,3 @@ class SolubilityInference:
 
 
 SolubilityInference_app = SolubilityInference.bind()
-
-
-
-
-
