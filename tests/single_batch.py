@@ -1,4 +1,3 @@
-# File name: model_client.py
 import requests
 
 test_molecules = [
@@ -9,11 +8,13 @@ test_molecules = [
 ]
 
 for mol in test_molecules:
-    response = requests.post("http://127.0.0.1:8000/predict", params={"smiles": mol})
-    print(f"{mol}:", response.json())
+    response = requests.post("http://127.0.0.1:8000/predict", json={"smiles": mol})
+    print(response.json())
 
 
+data = {"smiles_list": test_molecules}
 response = requests.post(
-    "http://127.0.0.1:8000/predict_batch", params={"smiles_list": test_molecules}
+    "http://127.0.0.1:8000/predict_batch", json=data
 )
-print(response.json())
+for i in response.json()["predictions"]:
+    print(i)
