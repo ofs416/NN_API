@@ -12,15 +12,17 @@ from pydantic import BaseModel
 
 class SolubilityRequest(BaseModel):
     smiles: str
-    
+
 
 class BatchSolubilityRequest(BaseModel):
     smiles_list: List[str]
+
 
 class SolubilityResponse(BaseModel):
     smiles: str
     solubility: Optional[float] = None
     error: Optional[str] = None
+
 
 class BatchSolubilityResponse(BaseModel):
     predictions: List[SolubilityResponse]
@@ -62,21 +64,19 @@ class SolubilityInference:
         features = self.process_smiles(smiles)
         if features is None:
             return SolubilityResponse(
-                smiles=smiles,
-                solubility=None,
-                error="Could not process SMILES string"
+                smiles=smiles, solubility=None, error="Could not process SMILES string"
             )
-            
+
         try:
             with torch.no_grad():
-                features_tensor = torch.FloatTensor(features).unsqueeze(0).to(self.device)
+                features_tensor = (
+                    torch.FloatTensor(features).unsqueeze(0).to(self.device)
+                )
                 prediction = self.model(features_tensor).squeeze().item()
                 return SolubilityResponse(smiles=smiles, solubility=prediction)
         except Exception as e:
             return SolubilityResponse(
-                smiles=smiles,
-                solubility=None,
-                error=f"Prediction error: {str(e)}"
+                smiles=smiles, solubility=None, error=f"Prediction error: {str(e)}"
             )
 
     @app.post("/predict")
@@ -91,7 +91,6 @@ class SolubilityInference:
             pred = self.predict_single(smiles)
             predictions.append(pred)
         return BatchSolubilityResponse(predictions=predictions)
-
 
 
 SolubilityInference_app = SolubilityInference.bind()
