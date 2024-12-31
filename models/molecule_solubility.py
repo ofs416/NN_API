@@ -226,6 +226,9 @@ def main():
     # Plot training history
     trainer.plot_training_history()
 
+    model_scripted = torch.jit.script(model)  # Export to TorchScript
+    model_scripted.save("model_scripted.pt")  # Save
+
 
 if __name__ == "__main__":
     main()
