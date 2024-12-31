@@ -8,7 +8,9 @@ test_molecules = [
 ]
 
 
-response = requests.post("http://127.0.0.1:8000/predict", json={"smiles": "CC(=O)OC1=CC=CC=C1C(=O)O"})
+response = requests.post(
+    "http://127.0.0.1:8000/predict", json={"smiles": "CC(=O)OC1=CC=CC=C1C(=O)O"}
+)
 print(response.json())
 
 
@@ -16,4 +18,3 @@ data = {"smiles_list": test_molecules}
 response = requests.post("http://127.0.0.1:8000/predict_batch", json=data)
 for i in response.json()["predictions"]:
     print(i)
-

@@ -31,7 +31,9 @@ class BatchSolubilityResponse(BaseModel):
 app = FastAPI(title="SMILES Solubility Prediction Service")
 
 
-@serve.deployment(num_replicas="auto", ray_actor_options={"num_cpus": 0.2, "num_gpus": 0})
+@serve.deployment(
+    num_replicas="auto", ray_actor_options={"num_cpus": 0.2, "num_gpus": 0}
+)
 @serve.ingress(app)
 class SolubilityInference:
     def __init__(
