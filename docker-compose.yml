@@ -1,13 +1,33 @@
 services:
-  api:
+  head:
     build: .
     ports:
-      - "8000:8000"
-    volumes:
-      - ./app:/code/app
+      - "8265:8265"  # Ray dashboard
+      - "10001:10001"  # Ray client port
+      - "6379:6379"  # Redis port
+    command: >
+      bash -c ".venv/bin/ray start --head 
+      --port=6379 
+      --dashboard-port=8265 
+      --dashboard-host=0.0.0.0 
+      --block"
+    environment:
+      - RAY_HEAD_IP=head
     networks:
-      - app_network
+      - ray_network
+
+  app:
+    build: .
+    depends_on:
+      - head
+    ports:
+      - "8000:8000"
+    command: bash -c "uv run app/main.py"
+    environment:
+      - RAY_ADDRESS=ray://head:10001
+    networks:
+      - ray_network
 
 networks:
-  app_network:
+  ray_network:
     driver: bridge
