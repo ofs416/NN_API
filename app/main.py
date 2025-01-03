@@ -11,21 +11,40 @@ from pydantic import BaseModel
 
 
 class SolubilityRequest(BaseModel):
+    """
+    Request for solubility prediction
+    """
     smiles: str
+    """SMILES string of the molecule"""
 
 
 class BatchSolubilityRequest(BaseModel):
+    """
+    Request for batch solubility prediction
+    """
     smiles_list: List[str]
+    """List of SMILES strings"""
 
 
 class SolubilityResponse(BaseModel):
+    """
+    Response for solubility prediction
+    """
     smiles: str
+    """SMILES string of the molecule"""
     solubility: Optional[float] = None
+    """Predicted solubility value"""
     error: Optional[str] = None
+    """Error message"""
+
 
 
 class BatchSolubilityResponse(BaseModel):
+    """
+    Response for batch solubility prediction
+    """
     predictions: List[SolubilityResponse]
+    """List of solubility predictions"""
 
 
 app = FastAPI(title="SMILES Solubility Prediction Service")

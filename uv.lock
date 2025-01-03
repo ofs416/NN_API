@@ -1077,6 +1077,27 @@ wheels = [
 ]
 
 [[package]]
+name = "mako"
+version = "1.3.8"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markupsafe" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5f/d9/8518279534ed7dace1795d5a47e49d5299dd0994eed1053996402a8902f9/mako-1.3.8.tar.gz", hash = "sha256:577b97e414580d3e088d47c2dbbe9594aa7a5146ed2875d4dfa9075af2dd3cc8", size = 392069 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1e/bf/7a6a36ce2e4cafdfb202752be68850e22607fccd692847c45c1ae3c17ba6/Mako-1.3.8-py3-none-any.whl", hash = "sha256:42f48953c7eb91332040ff567eb7eea69b22e7a4affbc5ba8e845e8f730f6627", size = 78569 },
+]
+
+[[package]]
+name = "markdown"
+version = "3.7"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/54/28/3af612670f82f4c056911fbbbb42760255801b3068c48de792d354ff4472/markdown-3.7.tar.gz", hash = "sha256:2ae2471477cfd02dbbf038d5d9bc226d40def84b4fe2986e49b59b6b472bbed2", size = 357086 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3f/08/83871f3c50fc983b88547c196d11cf8c3340e37c32d2e9d6152abe2c61f7/Markdown-3.7-py3-none-any.whl", hash = "sha256:7eb6df5690b81a1d7942992c97fad2938e956e79df20cbc6186e9c3a77b1c803", size = 106349 },
+]
+
+[[package]]
 name = "markdown-it-py"
 version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1346,6 +1367,7 @@ dev = [
     { name = "locust" },
     { name = "matplotlib" },
     { name = "pandas" },
+    { name = "pdoc3" },
     { name = "pysmiles" },
     { name = "ray" },
     { name = "rdkit" },
@@ -1373,6 +1395,7 @@ dev = [
     { name = "locust", specifier = ">=2.32.5" },
     { name = "matplotlib", specifier = ">=3.10.0" },
     { name = "pandas", specifier = ">=2.2.3" },
+    { name = "pdoc3", specifier = ">=0.11.5" },
     { name = "pysmiles", specifier = ">=1.1.2" },
     { name = "ray", specifier = ">=2.40.0" },
     { name = "rdkit", specifier = ">=2024.3.6" },
@@ -1623,6 +1646,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/b2/35/80cf8f6a4f34017a7fe28242dc45161a1baa55c41563c354d8147e8358b2/pbr-6.1.0.tar.gz", hash = "sha256:788183e382e3d1d7707db08978239965e8b9e4e5ed42669bf4758186734d5f24", size = 124032 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1d/44/6a65ecd630393d47ad3e7d5354768cb7f9a10b3a0eb2cd8c6f52b28211ee/pbr-6.1.0-py2.py3-none-any.whl", hash = "sha256:a776ae228892d8013649c0aeccbb3d5f99ee15e005a4cbb7e61d55a067b28a2a", size = 108529 },
+]
+
+[[package]]
+name = "pdoc3"
+version = "0.11.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "mako" },
+    { name = "markdown" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8b/40/669cb485321fa41ee87e2e6e05280baf394fa06d3430bb3c260db860ef6a/pdoc3-0.11.5.tar.gz", hash = "sha256:fc40607e3f46860ba42c02d30075fe1a52c039b77ffa8e86c1cbc4a8078841b3", size = 99496 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/70/24/a1294c6108c9a887bebed876479c62f616be4e832bf94811b12d1c369f63/pdoc3-0.11.5-py3-none-any.whl", hash = "sha256:b614436239716e1655e538f68a42c62a0bac566e70ddd86c58bc66d6a9ec90a0", size = 144100 },
 ]
 
 [[package]]
