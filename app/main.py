@@ -14,6 +14,7 @@ class SolubilityRequest(BaseModel):
     """
     Request for solubility prediction
     """
+
     smiles: str
     """SMILES string of the molecule"""
 
@@ -22,6 +23,7 @@ class BatchSolubilityRequest(BaseModel):
     """
     Request for batch solubility prediction
     """
+
     smiles_list: List[str]
     """List of SMILES strings"""
 
@@ -30,6 +32,7 @@ class SolubilityResponse(BaseModel):
     """
     Response for solubility prediction
     """
+
     smiles: str
     """SMILES string of the molecule"""
     solubility: Optional[float] = None
@@ -38,11 +41,11 @@ class SolubilityResponse(BaseModel):
     """Error message"""
 
 
-
 class BatchSolubilityResponse(BaseModel):
     """
     Response for batch solubility prediction
     """
+
     predictions: List[SolubilityResponse]
     """List of solubility predictions"""
 
