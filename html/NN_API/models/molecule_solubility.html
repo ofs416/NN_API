@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
+<title>NN_API.models.molecule_solubility API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>NN_API.models.molecule_solubility</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="NN_API.models.molecule_solubility.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main():
+    # Set device
+    device = torch.device(&#34;cuda&#34; if torch.cuda.is_available() else &#34;cpu&#34;)
+
+    # Create dataset
+    dataset = MoleculeDataset(&#34;curated-solubility-dataset.csv&#34;)
+
+    # Split dataset
+    train_size = int(0.8 * len(dataset))
+    val_size = len(dataset) - train_size
+    train_dataset, val_dataset = torch.utils.data.random_split(
+        dataset, [train_size, val_size]
+    )
+
+    # Create data loaders
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
+
+    # Initialize model, criterion, optimizer
+    model = SolubilityPredictor()
+    criterion = nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode=&#34;min&#34;, factor=0.5, patience=5, min_lr=1e-6
+    )
+
+    # Create trainer and train
+    trainer = Trainer(model, criterion, optimizer, device)
+    trainer.train(train_loader, val_loader, epochs=100, scheduler=scheduler)
+
+    # Plot training history
+    trainer.plot_training_history()
+
+    model_scripted = torch.jit.script(model)  # Export to TorchScript
+    model_scripted.save(&#34;model_scripted.pt&#34;)  # Save</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="NN_API.models.molecule_solubility.MoleculeDataset"><code class="flex name class">
+<span>class <span class="ident">MoleculeDataset</span></span>
+<span>(</span><span>csv_file: str, smiles_col='SMILES', target_col='Solubility')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MoleculeDataset(Dataset):
+    def __init__(self, csv_file: str, smiles_col=&#34;SMILES&#34;, target_col=&#34;Solubility&#34;):
+        self.data = pd.read_csv(csv_file)
+
+        # Pre-compute fingerprints during initialization
+        print(&#34;Computing molecular fingerprints...&#34;)
+        self.features = []
+        self.targets = []
+
+        for idx in range(len(self.data)):
+            smiles = self.data.iloc[idx][smiles_col]
+            # Handle ionic compounds
+            if &#34;.&#34; in smiles:
+                parts = smiles.split(&#34;.&#34;)
+                smiles = max(parts, key=len)
+
+            mol = Chem.MolFromSmiles(smiles)
+            if mol is not None:
+                # Generate Morgan fingerprint
+                morgan_gen = Chem.rdFingerprintGenerator.GetMorganGenerator(radius=2)
+                features = morgan_gen.GetFingerprintAsNumPy(mol)
+                self.features.append(features)
+                self.targets.append(self.data.iloc[idx][target_col])
+            else:
+                print(f&#34;Warning: Could not process SMILES {smiles}&#34;)
+
+        self.features = np.array(self.features)
+        self.targets = np.array(self.targets)
+        print(f&#34;Processed {len(self.features)} molecules successfully&#34;)
+
+    def __len__(self) -&gt; int:
+        return len(self.features)
+
+    def __getitem__(self, idx) -&gt; Tuple[torch.FloatTensor, torch.FloatTensor]:
+        return torch.FloatTensor(self.features[idx]), torch.tensor(
+            self.targets[idx]
+        ).float()</code></pre>
+</details>
+<div class="desc"><p>An abstract class representing a :class:<code>Dataset</code>.</p>
+<p>All datasets that represent a map from keys to data samples should subclass
+it. All subclasses should overwrite :meth:<code>__getitem__</code>, supporting fetching a
+data sample for a given key. Subclasses could also optionally overwrite
+:meth:<code>__len__</code>, which is expected to return the size of the dataset by many
+:class:<code>~torch.utils.data.Sampler</code> implementations and the default options
+of :class:<code>~torch.utils.data.DataLoader</code>. Subclasses could also
+optionally implement :meth:<code>__getitems__</code>, for speedup batched samples
+loading. This method accepts list of indices of samples of batch and returns
+list of samples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>:class:<code>~torch.utils.data.DataLoader</code> by default constructs an index
+sampler that yields integral indices.
+To make it work with a map-style
+dataset with non-integral indices/keys, a custom sampler must be provided.</p>
+</div></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>torch.utils.data.dataset.Dataset</li>
+<li>typing.Generic</li>
+</ul>
+</dd>
+<dt id="NN_API.models.molecule_solubility.SolubilityPredictor"><code class="flex name class">
+<span>class <span class="ident">SolubilityPredictor</span></span>
+<span>(</span><span>input_size: int = 2048)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SolubilityPredictor(nn.Module):
+    def __init__(self, input_size: int = 2048):
+        super().__init__()
+        self.model = nn.Sequential(
+            nn.Linear(input_size, 1024),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(1024, 512),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(256, 1),
+        )
+
+    def forward(self, x) -&gt; torch.Tensor:
+        return self.model(x)</code></pre>
+</details>
+<div class="desc"><p>Base class for all neural network modules.</p>
+<p>Your models should also subclass this class.</p>
+<p>Modules can also contain other Modules, allowing to nest them in
+a tree structure. You can assign the submodules as regular attributes::</p>
+<pre><code>import torch.nn as nn
+import torch.nn.functional as F
+
+class Model(nn.Module):
+    def __init__(self) -&gt; None:
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, 20, 5)
+        self.conv2 = nn.Conv2d(20, 20, 5)
+
+    def forward(self, x):
+        x = F.relu(self.conv1(x))
+        return F.relu(self.conv2(x))
+</code></pre>
+<p>Submodules assigned in this way will be registered, and will have their
+parameters converted too when you call :meth:<code>to</code>, etc.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As per the example above, an <code>__init__()</code> call to the parent class
+must be made before assignment on the child.</p>
+</div>
+<p>:ivar training: Boolean represents whether this module is in training or
+evaluation mode.
+:vartype training: bool</p>
+<p>Initialize internal Module state, shared by both nn.Module and ScriptModule.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>torch.nn.modules.module.Module</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="NN_API.models.molecule_solubility.SolubilityPredictor.forward"><code class="name flex">
+<span>def <span class="ident">forward</span></span>(<span>self, x) ‑> torch.Tensor</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def forward(self, x) -&gt; torch.Tensor:
+    return self.model(x)</code></pre>
+</details>
+<div class="desc"><p>Define the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the :class:<code>Module</code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div></div>
+</dd>
+</dl>
+</dd>
+<dt id="NN_API.models.molecule_solubility.Trainer"><code class="flex name class">
+<span>class <span class="ident">Trainer</span></span>
+<span>(</span><span>model: torch.nn.modules.module.Module,<br>criterion: torch.nn.modules.module.Module,<br>optimizer: torch.optim.optimizer.Optimizer,<br>device: torch.device)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Trainer:
+    def __init__(
+        self,
+        model: nn.Module,
+        criterion: nn.Module,
+        optimizer: optim.Optimizer,
+        device: torch.device,
+    ) -&gt; None:
+        self.model = model.to(device)
+        self.criterion = criterion
+        self.optimizer = optimizer
+        self.device = device
+        self.train_losses: List[float] = []
+        self.val_losses: List[float] = []
+        self.val_r2_scores: List[float] = []
+
+    def train_epoch(self, train_loader: DataLoader) -&gt; float:
+        self.model.train()
+        total_loss: float = 0
+
+        for batch_idx, (features, targets) in enumerate(train_loader):
+            features, targets = features.to(self.device), targets.to(self.device)
+
+            self.optimizer.zero_grad()
+            outputs = self.model(features).squeeze()
+            loss = self.criterion(outputs, targets)
+            loss.backward()
+            self.optimizer.step()
+
+            total_loss += loss.item()
+
+        return total_loss / len(train_loader)
+
+    def validate(self, val_loader: DataLoader) -&gt; Tuple[float, float]:
+        self.model.eval()
+        total_loss: float = 0
+        all_preds: List[float] = []
+        all_targets: List[float] = []
+
+        with torch.no_grad():
+            for features, targets in val_loader:
+                features, targets = features.to(self.device), targets.to(self.device)
+                outputs = self.model(features).squeeze()
+                loss = self.criterion(outputs, targets)
+                total_loss += loss.item()
+
+                all_preds.extend(outputs.cpu().numpy())
+                all_targets.extend(targets.cpu().numpy())
+
+        val_loss = total_loss / len(val_loader)
+        r2_score = self.calculate_r2(torch.tensor(all_preds), torch.tensor(all_targets))
+
+        return val_loss, r2_score
+
+    @staticmethod
+    def calculate_r2(pred: torch.Tensor, true: torch.Tensor) -&gt; float:
+        ss_tot = torch.sum((true - true.mean()) ** 2)
+        ss_res = torch.sum((true - pred) ** 2)
+        r2 = 1 - (ss_res / ss_tot)
+        return r2.item()
+
+    def train(
+        self,
+        train_loader: DataLoader,
+        val_loader: DataLoader,
+        epochs: int,
+        scheduler: Optional[torch.optim.lr_scheduler._LRScheduler] = None,
+    ) -&gt; None:
+        best_val_loss: float = float(&#34;inf&#34;)
+        patience: int = 10
+        patience_counter: int = 0
+
+        for epoch in tqdm.tqdm(range(epochs)):
+            train_loss = self.train_epoch(train_loader)
+            val_loss, r2_score = self.validate(val_loader)
+
+            self.train_losses.append(train_loss)
+            self.val_losses.append(val_loss)
+            self.val_r2_scores.append(r2_score)
+
+            if scheduler is not None:
+                scheduler.step(val_loss)
+
+            if val_loss &lt; best_val_loss:
+                best_val_loss = val_loss
+                patience_counter = 0
+                torch.save(self.model.state_dict(), &#34;best_model.pt&#34;)
+            else:
+                patience_counter += 1
+
+            print(f&#34;Epoch {epoch+1}/{epochs}:&#34;)
+            print(f&#34;Train Loss: {train_loss:.4f}&#34;)
+            print(f&#34;Val Loss: {val_loss:.4f}&#34;)
+            print(f&#34;R² Score: {r2_score:.4f}&#34;)
+
+            if patience_counter &gt;= patience:
+                print(&#34;Early stopping triggered&#34;)
+                break
+
+    def plot_training_history(self) -&gt; None:
+        plt.figure(figsize=(12, 4))
+
+        plt.subplot(1, 2, 1)
+        plt.plot(self.train_losses, label=&#34;Train Loss&#34;)
+        plt.plot(self.val_losses, label=&#34;Val Loss&#34;)
+        plt.xlabel(&#34;Epoch&#34;)
+        plt.ylabel(&#34;Loss&#34;)
+        plt.legend()
+        plt.title(&#34;Training and Validation Loss&#34;)
+
+        plt.subplot(1, 2, 2)
+        plt.plot(self.val_r2_scores)
+        plt.xlabel(&#34;Epoch&#34;)
+        plt.ylabel(&#34;R² Score&#34;)
+        plt.title(&#34;Validation R² Score&#34;)
+
+        plt.tight_layout()
+        plt.show()</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="NN_API.models.molecule_solubility.Trainer.calculate_r2"><code class="name flex">
+<span>def <span class="ident">calculate_r2</span></span>(<span>pred: torch.Tensor, true: torch.Tensor) ‑> float</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def calculate_r2(pred: torch.Tensor, true: torch.Tensor) -&gt; float:
+    ss_tot = torch.sum((true - true.mean()) ** 2)
+    ss_res = torch.sum((true - pred) ** 2)
+    r2 = 1 - (ss_res / ss_tot)
+    return r2.item()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="NN_API.models.molecule_solubility.Trainer.plot_training_history"><code class="name flex">
+<span>def <span class="ident">plot_training_history</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_training_history(self) -&gt; None:
+    plt.figure(figsize=(12, 4))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(self.train_losses, label=&#34;Train Loss&#34;)
+    plt.plot(self.val_losses, label=&#34;Val Loss&#34;)
+    plt.xlabel(&#34;Epoch&#34;)
+    plt.ylabel(&#34;Loss&#34;)
+    plt.legend()
+    plt.title(&#34;Training and Validation Loss&#34;)
+
+    plt.subplot(1, 2, 2)
+    plt.plot(self.val_r2_scores)
+    plt.xlabel(&#34;Epoch&#34;)
+    plt.ylabel(&#34;R² Score&#34;)
+    plt.title(&#34;Validation R² Score&#34;)
+
+    plt.tight_layout()
+    plt.show()</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="NN_API.models.molecule_solubility.Trainer.train"><code class="name flex">
+<span>def <span class="ident">train</span></span>(<span>self,<br>train_loader: torch.utils.data.dataloader.DataLoader,<br>val_loader: torch.utils.data.dataloader.DataLoader,<br>epochs: int,<br>scheduler: torch.optim.lr_scheduler._LRScheduler | None = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train(
+    self,
+    train_loader: DataLoader,
+    val_loader: DataLoader,
+    epochs: int,
+    scheduler: Optional[torch.optim.lr_scheduler._LRScheduler] = None,
+) -&gt; None:
+    best_val_loss: float = float(&#34;inf&#34;)
+    patience: int = 10
+    patience_counter: int = 0
+
+    for epoch in tqdm.tqdm(range(epochs)):
+        train_loss = self.train_epoch(train_loader)
+        val_loss, r2_score = self.validate(val_loader)
+
+        self.train_losses.append(train_loss)
+        self.val_losses.append(val_loss)
+        self.val_r2_scores.append(r2_score)
+
+        if scheduler is not None:
+            scheduler.step(val_loss)
+
+        if val_loss &lt; best_val_loss:
+            best_val_loss = val_loss
+            patience_counter = 0
+            torch.save(self.model.state_dict(), &#34;best_model.pt&#34;)
+        else:
+            patience_counter += 1
+
+        print(f&#34;Epoch {epoch+1}/{epochs}:&#34;)
+        print(f&#34;Train Loss: {train_loss:.4f}&#34;)
+        print(f&#34;Val Loss: {val_loss:.4f}&#34;)
+        print(f&#34;R² Score: {r2_score:.4f}&#34;)
+
+        if patience_counter &gt;= patience:
+            print(&#34;Early stopping triggered&#34;)
+            break</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="NN_API.models.molecule_solubility.Trainer.train_epoch"><code class="name flex">
+<span>def <span class="ident">train_epoch</span></span>(<span>self, train_loader: torch.utils.data.dataloader.DataLoader) ‑> float</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train_epoch(self, train_loader: DataLoader) -&gt; float:
+    self.model.train()
+    total_loss: float = 0
+
+    for batch_idx, (features, targets) in enumerate(train_loader):
+        features, targets = features.to(self.device), targets.to(self.device)
+
+        self.optimizer.zero_grad()
+        outputs = self.model(features).squeeze()
+        loss = self.criterion(outputs, targets)
+        loss.backward()
+        self.optimizer.step()
+
+        total_loss += loss.item()
+
+    return total_loss / len(train_loader)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="NN_API.models.molecule_solubility.Trainer.validate"><code class="name flex">
+<span>def <span class="ident">validate</span></span>(<span>self, val_loader: torch.utils.data.dataloader.DataLoader) ‑> Tuple[float, float]</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def validate(self, val_loader: DataLoader) -&gt; Tuple[float, float]:
+    self.model.eval()
+    total_loss: float = 0
+    all_preds: List[float] = []
+    all_targets: List[float] = []
+
+    with torch.no_grad():
+        for features, targets in val_loader:
+            features, targets = features.to(self.device), targets.to(self.device)
+            outputs = self.model(features).squeeze()
+            loss = self.criterion(outputs, targets)
+            total_loss += loss.item()
+
+            all_preds.extend(outputs.cpu().numpy())
+            all_targets.extend(targets.cpu().numpy())
+
+    val_loss = total_loss / len(val_loader)
+    r2_score = self.calculate_r2(torch.tensor(all_preds), torch.tensor(all_targets))
+
+    return val_loss, r2_score</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="NN_API.models" href="index.html">NN_API.models</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="NN_API.models.molecule_solubility.main" href="#NN_API.models.molecule_solubility.main">main</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="NN_API.models.molecule_solubility.MoleculeDataset" href="#NN_API.models.molecule_solubility.MoleculeDataset">MoleculeDataset</a></code></h4>
+</li>
+<li>
+<h4><code><a title="NN_API.models.molecule_solubility.SolubilityPredictor" href="#NN_API.models.molecule_solubility.SolubilityPredictor">SolubilityPredictor</a></code></h4>
+<ul class="">
+<li><code><a title="NN_API.models.molecule_solubility.SolubilityPredictor.forward" href="#NN_API.models.molecule_solubility.SolubilityPredictor.forward">forward</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="NN_API.models.molecule_solubility.Trainer" href="#NN_API.models.molecule_solubility.Trainer">Trainer</a></code></h4>
+<ul class="">
+<li><code><a title="NN_API.models.molecule_solubility.Trainer.calculate_r2" href="#NN_API.models.molecule_solubility.Trainer.calculate_r2">calculate_r2</a></code></li>
+<li><code><a title="NN_API.models.molecule_solubility.Trainer.plot_training_history" href="#NN_API.models.molecule_solubility.Trainer.plot_training_history">plot_training_history</a></code></li>
+<li><code><a title="NN_API.models.molecule_solubility.Trainer.train" href="#NN_API.models.molecule_solubility.Trainer.train">train</a></code></li>
+<li><code><a title="NN_API.models.molecule_solubility.Trainer.train_epoch" href="#NN_API.models.molecule_solubility.Trainer.train_epoch">train_epoch</a></code></li>
+<li><code><a title="NN_API.models.molecule_solubility.Trainer.validate" href="#NN_API.models.molecule_solubility.Trainer.validate">validate</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
+</footer>
+</body>
+</html>
