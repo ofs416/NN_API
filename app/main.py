@@ -104,11 +104,15 @@ class SolubilityInference:
             )
 
     @app.post("/predict")
-    async def predict_single_endpoint(self, request: SolubilityRequest) -> SolubilityResponse:
+    async def predict_single_endpoint(
+        self, request: SolubilityRequest
+    ) -> SolubilityResponse:
         return self.predict_single(request.smiles)
 
     @app.post("/predict_batch")
-    async def predict_batch(self, request: BatchSolubilityRequest) -> BatchSolubilityResponse:
+    async def predict_batch(
+        self, request: BatchSolubilityRequest
+    ) -> BatchSolubilityResponse:
         """Endpoint for batch SMILES prediction"""
         predictions = []
         for smiles in request.smiles_list:

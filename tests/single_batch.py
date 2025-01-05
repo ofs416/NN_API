@@ -12,7 +12,7 @@ response_batch = requests.post("http://127.0.0.1:8000/predict_batch", json=data)
 for i, response in enumerate(response_batch.json()["predictions"]):
     print(response)
     response_single = requests.post(
-            "http://127.0.0.1:8000/predict", json={"smiles": test_molecules[i]}
-            ).json()
+        "http://127.0.0.1:8000/predict", json={"smiles": test_molecules[i]}
+    ).json()
     print(response_single)
     assert response == response_single
