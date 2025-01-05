@@ -32,9 +32,7 @@ class MoleculeDataset(Dataset):
             if mol is not None:
                 # Generate Morgan fingerprint
                 morgan_gen = Chem.rdFingerprintGenerator.GetMorganGenerator(radius=2)
-                # fp = morgan_gen.GetFingerprint(mol)
                 features = morgan_gen.GetFingerprintAsNumPy(mol)
-                # features = np.array(list(fp.ToBitString())).astype(np.float32)
                 self.features.append(features)
                 self.targets.append(self.data.iloc[idx][target_col])
             else:
