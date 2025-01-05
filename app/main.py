@@ -83,7 +83,7 @@ class SolubilityInference:
         morgan_gen = Chem.rdFingerprintGenerator.GetMorganGenerator(radius=2)
         return morgan_gen.GetFingerprintAsNumPy(mol)
 
-    def predict_single(self, smiles: str):
+    def predict_single(self, smiles: str) -> SolubilityResponse:
         """Predict solubility for a single SMILES string."""
         features = self.process_smiles(smiles)
         if features is None:
@@ -104,11 +104,11 @@ class SolubilityInference:
             )
 
     @app.post("/predict")
-    async def predict_single_endpoint(self, request: SolubilityRequest):
+    async def predict_single_endpoint(self, request: SolubilityRequest) -> SolubilityResponse:
         return self.predict_single(request.smiles)
 
     @app.post("/predict_batch")
-    async def predict_batch(self, request: BatchSolubilityRequest):
+    async def predict_batch(self, request: BatchSolubilityRequest) -> BatchSolubilityResponse:
         """Endpoint for batch SMILES prediction"""
         predictions = []
         for smiles in request.smiles_list:
