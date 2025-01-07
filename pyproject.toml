@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]>=0.115.6",
-    "locust>=2.32.5",
     "numpy>=2.2.0",
     "ray[default]>=2.40.0",
     "rdkit>=2024.3.6",

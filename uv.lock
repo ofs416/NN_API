@@ -1402,7 +1402,6 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
-    { name = "locust" },
     { name = "numpy" },
     { name = "ray", extra = ["default"] },
     { name = "rdkit" },
@@ -1431,7 +1430,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.6" },
-    { name = "locust", specifier = ">=2.32.5" },
     { name = "numpy", specifier = ">=2.2.0" },
     { name = "ray", extras = ["default"], specifier = ">=2.40.0" },
     { name = "rdkit", specifier = ">=2024.3.6" },
