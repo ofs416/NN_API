@@ -1,6 +1,10 @@
 services:
-  head:
-    build: .
+  backend-head:
+    build: 
+      context: .
+      dockerfile: dockerfile
+      args:
+        DEPS_GROUP: prod-back
     ports:
       - "8265:8265"  # Ray dashboard
       - "10001:10001"  # Ray client port
@@ -16,15 +20,34 @@ services:
     networks:
       - ray_network
 
-  app:
-    build: .
+  backend-app:
+    build: 
+      context: .
+      dockerfile: dockerfile
+      args:
+        DEPS_GROUP: prod-back
     depends_on:
-      - head
+      - backend_head
     ports:
       - "8000:8000"
     command: bash -c "uv run app/main.py"
     environment:
       - RAY_ADDRESS=ray://head:10001
+    networks:
+      - ray_network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DEPS_GROUP: prod-front
+    depends_on:
+      - backend-head
+      - back-app
+    ports:
+      - "8501:8501"
+    command: streamlit run app/frontend.py
     networks:
       - ray_network
 
