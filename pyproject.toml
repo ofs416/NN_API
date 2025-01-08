@@ -4,16 +4,23 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "fastapi[standard]>=0.115.6",
+dependencies = []
+
+[tool.uv]
+default-groups = []
+
+[dependency-groups]
+prod-back = [
+    "fastapi>=0.115.6",
     "numpy>=2.2.0",
     "ray[default]>=2.40.0",
     "rdkit>=2024.3.6",
-    "streamlit>=1.41.1",
     "torch>=2.5.1",
 ]
-
-[dependency-groups]
+prod-front = [
+    "requests>=2.32.3",
+    "streamlit>=1.41.1",
+]
 dev = [
     "ipykernel>=6.29.5",
     "ipynb>=0.5.1",
@@ -21,12 +28,12 @@ dev = [
     "pandas>=2.2.3",
     "pysmiles>=1.1.2",
     "requests>=2.32.3",
-    "ruff>=0.8.3",
-    "torch-geometric>=2.6.1",
     "tqdm>=4.67.1",
     "rdkit>=2024.3.6",
     "scikit-learn>=1.6.0",
     "ray>=2.40.0",
     "locust>=2.32.5",
     "pdoc3>=0.11.5",
+    "ruff>=0.8.6",
 ]
+
