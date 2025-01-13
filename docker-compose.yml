@@ -27,7 +27,7 @@ services:
       args:
         DEPS_GROUP: prod-back
     depends_on:
-      - backend_head
+      - backend-head
     ports:
       - "8000:8000"
     command: bash -c "uv run app/main.py"
@@ -36,7 +36,7 @@ services:
     networks:
       - ray_network
 
-  frontend:
+  frontend-app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -44,7 +44,7 @@ services:
         DEPS_GROUP: prod-front
     depends_on:
       - backend-head
-      - back-app
+      - backend-app
     ports:
       - "8501:8501"
     command: streamlit run app/frontend.py
