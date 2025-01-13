@@ -161,7 +161,7 @@ class Trainer:
             else:
                 patience_counter += 1
 
-            print(f"Epoch {epoch+1}/{epochs}:")
+            print(f"Epoch {epoch + 1}/{epochs}:")
             print(f"Train Loss: {train_loss:.4f}")
             print(f"Val Loss: {val_loss:.4f}")
             print(f"R² Score: {r2_score:.4f}")
