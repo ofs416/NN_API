@@ -8,10 +8,10 @@ services:
     ports:
       - "8265:8265"  # Ray dashboard
       - "10001:10001"  # Ray client port
-      - "6379:6379"  # Redis port
+      - "8500:8500"  # Redis port
     command: >
       bash -c ".venv/bin/ray start --head 
-      --port=6379 
+      --port=8500 
       --dashboard-port=8265 
       --dashboard-host=0.0.0.0 
       --block"
@@ -30,7 +30,7 @@ services:
       - backend-head
     ports:
       - "8000:8000"
-    command: bash -c "uv run app/main.py"
+    command: bash -c "uv add ray[serve] && uv run app/main.py"
     environment:
       - RAY_ADDRESS=ray://head:10001
     networks:
@@ -47,7 +47,7 @@ services:
       - backend-app
     ports:
       - "8501:8501"
-    command: streamlit run app/frontend.py
+    command: bash -c "uv run streamlit run app/frontend.py"
     networks:
       - ray_network
 
