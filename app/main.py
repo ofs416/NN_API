@@ -125,6 +125,6 @@ SolubilityInference_app = SolubilityInference.bind()
 
 
 if __name__ == "__main__":
-    # Connect to the running Ray Serve instance.
+    # Required for local deployment only
     ray.init()
     serve.run(SolubilityInference_app, route_prefix="/")
