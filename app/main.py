@@ -49,7 +49,6 @@ class BatchSolubilityResponse(BaseModel):
     predictions: List[SolubilityResponse]
     """List of solubility predictions"""
 
-
 app = FastAPI(title="SMILES Solubility Prediction Service")
 
 
@@ -123,8 +122,5 @@ class SolubilityInference:
 
 SolubilityInference_app = SolubilityInference.bind()
 
+#  serve run app.main:SolubilityInference_app Required for local deployment only
 
-if __name__ == "__main__":
-    # Required for local deployment only
-    ray.init()
-    serve.run(SolubilityInference_app, route_prefix="/")
