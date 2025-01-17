@@ -1,24 +1,15 @@
-# Build stage
-FROM python:3.12-slim AS builder
+# Final stage
+FROM python:3.12-slim
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+RUN apt-get update && apt-get install -y curl
 
 # Copy the application into the container
 COPY . /code
 WORKDIR /code
 
 # Add build argument for the dependency group
-ARG DEPS_GROUP=prod-back
+ARG DEPS_GROUP
 RUN uv sync --frozen --no-cache --group ${DEPS_GROUP}
-
-# Final stage
-FROM python:3.12-slim
-
-# Copy uv and dependencies from builder
-COPY --from=builder /bin/uv /bin/uv
-COPY --from=builder /bin/uvx /bin/uvx
-COPY --from=builder /code /code
-
-WORKDIR /code
- 
