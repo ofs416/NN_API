@@ -14,9 +14,21 @@ services:
       --port=8500 
       --dashboard-port=8265 
       --dashboard-host=0.0.0.0 
+      --num-cpus=0
       --block"
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 6G
     networks:
       - ray_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://backend-head:8265"]  # Check if Ray dashboard is reachable
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
 
   backend-app:
     build: 
@@ -25,12 +37,24 @@ services:
       args:
         DEPS_GROUP: prod-back
     depends_on:
-      - backend-head
+      backend-head:
+        condition: service_healthy
     ports:
       - "8000:8000"
-    command: bash -c ".venv/bin/ray start --address=backend-head:8500 --block && .venv/bin/serve deploy app.main:SolubilityInference_app -a http://backend-head:8265"
+    command: >
+      bash -c ".venv/bin/ray start 
+      --address=backend-head:8500 
+      --block 
+      & .venv/bin/serve deploy app.main:SolubilityInference_app --address=http://backend-head:8265
+      & wait"
     networks:
       - ray_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://backend-app:8000/docs"] 
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
 
   frontend-app:
     build:
@@ -39,8 +63,10 @@ services:
       args:
         DEPS_GROUP: prod-front
     depends_on:
-      - backend-head
-      - backend-app
+      backend-head:
+        condition: service_healthy
+      backend-app:
+        condition: service_healthy
     ports:
       - "8501:8501"
     command: bash -c "uv run streamlit run app/frontend.py"
