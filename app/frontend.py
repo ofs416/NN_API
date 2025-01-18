@@ -17,11 +17,11 @@ def predict_molecule(smiles: Union[str, List[str]]) -> Optional[dict]:
     try:
         if isinstance(smiles, str):
             response = requests.post(
-                "http://127.0.0.1:8000/predict", json={"smiles": smiles}
+                "http://backend-app:8000/predict", json={"smiles": smiles}
             )
         elif isinstance(smiles, list):
             response = requests.post(
-                "http://127.0.0.1:8000/predict_batch", json={"smiles_list": smiles}
+                "http://backend-app:8000/predict_batch", json={"smiles_list": smiles}
             )
         else:
             st.error(f"Invalid input type: {type(smiles)}. Expected str or list[str].")

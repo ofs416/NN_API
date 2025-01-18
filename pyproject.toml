@@ -34,5 +34,6 @@ dev = [
     "locust>=2.32.5",
     "pdoc3>=0.11.5",
     "ruff>=0.8.6",
-    "ray>=2.40.0",
+    "ray[default,serve]>=2.40.0",
+    "torch>=2.5.1",
 ]
