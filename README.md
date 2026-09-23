@@ -1,145 +1,153 @@
-# Matrix Multiplication API
+# NN API: Molecular Solubility Inference Service
 
-A FastAPI-based web service that performs matrix multiplication using NumPy. This service is containerized using Docker and served through Nginx.
+A containerised inference service that predicts the aqueous solubility (logS) of molecules from SMILES strings. A PyTorch model is served with **Ray Serve** behind a **FastAPI** ingress, runs on a multi-node Ray cluster with replica autoscaling, and has a **Streamlit** frontend. Load testing uses **Locust**.
+
+## Architecture
+
+```
+            ┌────────────────────┐
+ browser ──▶│ frontend-app       │  Streamlit, :8501
+            └─────────┬──────────┘
+                      │ HTTP (backend-app:8000)
+            ┌─────────▼──────────┐       ┌────────────────────┐
+            │ backend-app        │──────▶│ backend-head       │
+            │ Ray worker node    │ joins │ Ray head node      │
+            │ Serve + FastAPI    │       │ GCS :8500          │
+            │ SolubilityInference│       │ dashboard :8265    │
+            │ replicas (auto)    │       │ client :10001      │
+            └────────────────────┘       └────────────────────┘
+```
+
+- **backend-head**: Ray head node. It has `--num-cpus=0`, so it only coordinates and never runs replicas. It also hosts the Ray dashboard.
+- **backend-app**: Ray worker node. It joins the cluster, then `serve deploy`s the application through the head's dashboard API.
+- **frontend-app**: Streamlit UI. It starts only after both backend services pass their health checks.
+
+Each service is built from the same `dockerfile`. A `DEPS_GROUP` build arg picks the uv dependency group (`prod-back` or `prod-front`), so the frontend image doesn't pull in torch or Ray.
 
 ## Features
 
-- Matrix multiplication endpoint
-- JSON request/response format
-- Docker containerization
-- Nginx reverse proxy
-- Development mode with hot reloading
-- Production-ready configuration
+- **Ray Serve deployment** with `num_replicas="auto"`: replicas scale with request load, 0.2 CPU per replica
+- **FastAPI ingress** with Pydantic request/response schemas and auto-generated OpenAPI docs
+- **TorchScript model**, loaded once per replica, CUDA if available, otherwise CPU
+- **Single and batch prediction** endpoints; an invalid SMILES returns a per-molecule error instead of failing the whole request
+- **Docker Compose orchestration** with health checks and ordered startup
+- **Locust load tests** and an endpoint consistency test
+- **CI**: GitHub Actions runs Ruff formatting on every push and PR and auto-commits the result
+- **API docs** generated with pdoc3 into `html/`
 
-## Prerequisites
-
-- Docker
-- Docker Compose
-
-## Project Structure
+## Project structure
 
 ```
 .
 ├── app/
-│   └── main.py              # FastAPI application
-├── dockerfile               # Docker configuration
-├── docker-compose.yml       # Docker Compose configuration
-├── nginx.conf              # Nginx configuration
-├── pyproject.toml          # Python project dependencies
-├── uv.lock                 # Dependency lock file
-└── README.md
+│   ├── main.py                  # Ray Serve deployment + FastAPI routes
+│   └── frontend.py              # Streamlit UI
+├── models/
+│   └── molecule_solubility.py   # Dataset, model, training loop, TorchScript export
+├── benchmarks/locust.py         # Locust load test
+├── tests/single_batch.py        # Checks single and batch endpoints agree
+├── html/                        # pdoc3-generated documentation
+├── dockerfile                   # Shared image, dependency group chosen by build arg
+├── docker-compose.yml           # Ray head, Ray worker/Serve app, Streamlit
+├── .github/workflows/lint.yml   # Ruff CI
+└── pyproject.toml / uv.lock     # uv dependency groups: prod-back, prod-front, dev
 ```
 
-## Installation & Running
+## Model
 
-### Development Mode
+`models/molecule_solubility.py` trains a regressor on RDKit Morgan fingerprints.
 
-Run the application with hot reloading enabled:
+- **Features:** 2048-bit Morgan fingerprints (radius 2). For salts and mixtures, the largest fragment is kept.
+- **Network:** MLP, 2048 → 1024 → 512 → 256 → 1, with ReLU and 0.2 dropout
+- **Training:** MSE loss, Adam (lr 1e-4), `ReduceLROnPlateau`, 80/20 split, early stopping (patience 10), validation R² tracked each epoch
+- **Export:** TorchScript, `model_scripted.pt`
+
+The dataset (`curated-solubility-dataset.csv`, with `SMILES` and `Solubility` columns, e.g. AqSolDB) and the trained weights (`*.pt`) are git-ignored. You need to produce them before running the service.
+
+```bash
+uv sync --group dev
+cd models
+# place curated-solubility-dataset.csv here
+uv run python molecule_solubility.py   # writes models/model_scripted.pt
+```
+
+## Running
+
+### Docker Compose (full stack)
+
+Make sure `models/model_scripted.pt` exists first; it is copied into the image.
 
 ```bash
 docker compose up --build
 ```
 
-### Production Mode
+| Service           | URL                      |
+|-------------------|--------------------------|
+| Streamlit UI      | http://localhost:8501    |
+| Ray dashboard     | http://localhost:8265    |
 
-Run the application in production mode:
+The Serve HTTP port (8000) is internal to the Compose network. To reach it from the host, uncomment the `ports` block on `backend-app`.
+
+### Local (without Docker)
 
 ```bash
-docker compose -f docker-compose.prod.yml up --build
+uv sync --group dev
+uv run serve run app.main:SolubilityInference_app   # API on http://127.0.0.1:8000
 ```
 
-## API Documentation
+Interactive API docs are at `http://127.0.0.1:8000/docs`.
 
-### Matrix Multiplication Endpoint
+## API
 
-**Endpoint**: `/matrix/multiply`  
-**Method**: POST  
-**Content Type**: application/json
+### `POST /predict`
 
-**Request Body**:
+```json
+{ "smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C" }
+```
+
+```json
+{ "smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C", "solubility": -0.87, "error": null }
+```
+
+### `POST /predict_batch`
+
+```json
+{ "smiles_list": ["CC(=O)OC1=CC=CC=C1C(=O)O", "not-a-smiles"] }
+```
+
 ```json
 {
-    "matrix1": [[1, 2], [3, 4]],
-    "matrix2": [[5, 6], [7, 8]]
+  "predictions": [
+    { "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O", "solubility": -1.72, "error": null },
+    { "smiles": "not-a-smiles", "solubility": null, "error": "Could not process SMILES string" }
+  ]
 }
 ```
 
-**Response**:
-```json
-{
-    "result_array": [[19, 22], [43, 50]]
-}
+The numbers above are illustrative. Real values depend on your trained weights.
+
+## Testing and load testing
+
+Both scripts target `http://127.0.0.1:8000`, so run the service locally with `serve run` or expose port 8000.
+
+```bash
+# Batch and single predictions must match for each molecule
+uv run python tests/single_batch.py
+
+# Load test; open http://localhost:8089 to set users and spawn rate
+uv run locust -f benchmarks/locust.py --host http://127.0.0.1:8000
 ```
 
-### Health Check
+Watch replicas scale up under load in the Ray dashboard's **Serve** tab.
 
-**Endpoint**: `/`  
-**Method**: GET
+## Documentation
 
-**Response**:
-```json
-{
-    "message": "API is running test"
-}
+Regenerate the HTML API docs with:
+
+```bash
+uv run pdoc --html --force -o html .
 ```
-
-## Testing
-
-You can test the API using the provided test script:
-
-```python
-import numpy as np
-import requests
-
-# Create example matrices
-matrix1 = np.array([[1, 2], [3, 4]])
-matrix2 = np.array([[5, 6], [7, 8]])
-
-# Convert NumPy arrays to lists for JSON serialization
-data = {
-    "matrix1": matrix1.tolist(),
-    "matrix2": matrix2.tolist()
-}
-
-# Send the POST request
-url = "http://localhost:8080/matrix/multiply"
-response = requests.post(url, json=data)
-
-# Print the result
-result = response.json()
-print("Result:", result["result_array"])
-```
-
-## Development
-
-The project uses:
-- FastAPI for the web framework
-- NumPy for matrix operations
-- uv for dependency management
-- Docker for containerization
-- Nginx as a reverse proxy
-
-### Development Dependencies
-
-Development dependencies are managed in `pyproject.toml`:
-- matplotlib
-- pandas
-- ruff (for linting)
-
-## Configuration
-
-
-### Ports
-
-- 8080
-
-### Docker Resources
-
-The production configuration includes resource limits:
-- API: 2 CPU cores, 1GB memory
-- Nginx: 1 CPU core, 512MB memory
-
 
 ## License
 
-This project is open source and available under the MIT License.
+MIT

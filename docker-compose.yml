@@ -59,7 +59,7 @@ services:
   frontend-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
       args:
         DEPS_GROUP: prod-front
     depends_on:
